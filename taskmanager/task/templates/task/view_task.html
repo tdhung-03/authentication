@@ -11,6 +11,8 @@
     {% for task in tasks %}
     {{task}}
     {% endfor %}
+
+    <a href="{% url 'logout' %}">Logout</a>
 </body>
 
 </html>
