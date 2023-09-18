@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 from django.contrib.auth.decorators import login_required
 from .forms import *
@@ -42,3 +42,15 @@ def edit_task(request, id):
         'form': form,
     }
     return render(request, 'task/edit_task.html', context)
+
+
+@login_required(login_url='login')
+def delete_task(request, id):
+    task = Task.objects.get(id=id)
+    if request.method == 'POST':
+        task.delete()
+        return redirect("view_task")
+    context = {
+        'task': task
+    }
+    return render(request, 'task/delete_task.html', context)
