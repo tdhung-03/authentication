@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
+from .forms import *
 # Create your views here.
 
 
@@ -27,3 +28,15 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect("view_task")
+
+
+def register_view(request):
+    form = RegistrationForm()
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+    context = {
+        'form': form
+    }
+    return render(request, 'user/register.html', context)
