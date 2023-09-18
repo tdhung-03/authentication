@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='login')
 def view_task(request):
-    tasks = Task.objects.all()
+    tasks = Task.objects.filter(user=request.user)
     context = {
         'tasks': tasks,
     }
